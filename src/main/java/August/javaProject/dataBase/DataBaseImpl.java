@@ -20,10 +20,19 @@ public class DataBaseImpl implements DataBase {
         bookList.add(book);
     }
 
+    @Override
+    public List<Book> findBookInLibrary(Book book) {
+        List<Book> searchResults=new ArrayList<>();
+        for(Book bookInLibrary: bookList){
 
+            if(bookInLibrary.equals(book)){
+                searchResults.add(bookInLibrary);
 
+            }
 
-
+        }
+                return searchResults;
+    }
 
 
 /*   @Override

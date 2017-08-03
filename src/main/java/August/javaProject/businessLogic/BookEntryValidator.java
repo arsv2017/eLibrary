@@ -1,6 +1,7 @@
 package August.javaProject.businessLogic;
 
 import August.javaProject.dataBase.DataBase;
+import August.javaProject.domain.Book;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class BookEntryValidator {
         List<Error> errorList = Lists.newArrayList();
         errorList.add(titleValidation(title).get());
         errorList.add(authorValidation(author).get());
+        errorList.add(pubYearValidation(pubYear).get());
+        Book newBook = new Book(title, author, pubYear);
+        errorList.add(alreadyExistValidation(newBook).get());
+        return errorList;
     }
 
 
@@ -47,6 +52,29 @@ public class BookEntryValidator {
             return Optional.of(new Error("Author", "Author field can not be empty"));
         }
         return Optional.empty();
+    }
+
+
+    Optional<Error> pubYearValidation(int pubYear) {
+
+        if (pubYear == 0) {
+
+            return Optional.of(new Error("pubYear", "Publication Year field can not be empty"));
+        }
+        return Optional.empty();
+    }
+
+
+    Optional<Error> alreadyExistValidation(Book newBook) {
+
+        if (dataBase.findBookInLibrary(newBook).size() < 5) {
+
+            return Optional.empty();
+        }
+
+        return Optional.of(new Error("", "Thank you, but this book is already present in library"));
+
+
     }
 
 

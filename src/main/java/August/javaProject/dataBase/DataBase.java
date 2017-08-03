@@ -10,6 +10,7 @@ import java.util.List;
 public interface DataBase {
 
  void saveNewBookInLibrary(Book book);
+ List<Book> findBookInLibrary(Book book);
  
 
 
