@@ -7,6 +7,7 @@ import August.javaProject.businessLogic.BusinessLogic;
 import August.javaProject.businessLogic.BusinessLogicImpl;
 import August.javaProject.dataBase.DataBase;
 import August.javaProject.dataBase.DataBaseImpl;
+import August.javaProject.domain.Book;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,18 +21,20 @@ public class LibraryApplication {
 
     public static void main(String argss[]) {
 
-        DataBase dataBase = new DataBaseImpl();
+        Book newBook = new Book("Master i Margarita", "Bulgakov", 1934);
+        System.out.println("HashCode of this book is "+newBook.hashCode());
+        DataBaseImpl dataBase = new DataBaseImpl();
         BookEntryValidator validator = new BookEntryValidator(dataBase);
-        BusinessLogic businessLogic=new BusinessLogicImpl()
+        BusinessLogic businessLogic=new BusinessLogicImpl(dataBase, validator);
 
         Map<Integer, Views> comands = new HashMap<Integer, Views>();
-        comands.put(1, new DonateBookView());
+        comands.put(1, new DonateBookView(businessLogic));
 
 
         while (true) {
             printLibraryMenu();
             int userSelection = getUsersSelection();
-            if (userSelection >= 2 && userSelection <= 5) {
+            if (userSelection == 5) {
                 break;
             } else {
 
@@ -42,12 +45,13 @@ public class LibraryApplication {
     }
 
     static void printLibraryMenu() {
-        System.out.println("Library menu");
-        System.out.println("1. Search book by title");
-        System.out.println("2. Search book by author");
-        System.out.println("3. Search book by title and author");
-        System.out.println("4. Donate book to library");
+        System.out.println("eLibrary menu");
+        System.out.println("1. Donate book to library");
+        System.out.println("2. Search book by title");
+        System.out.println("3. Search book by author");
+        System.out.println("4. Search book by title and author");
         System.out.println("5. Exit library");
+
     }
 
     static Integer getUsersSelection() {

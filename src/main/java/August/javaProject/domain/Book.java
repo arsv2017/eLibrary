@@ -6,19 +6,21 @@ package August.javaProject.domain;
 public class Book {
 
 
-   private  String title;
-   private String author;
-  private  int pubYear;
-   // private long id;
+    private String title;
+    private String author;
+    private int pubYear;
+    private long id;
 
 
-   public Book (String title, String author, int pubYear){
+    public Book(String title, String author, int pubYear) {
 
-        this.title=title;
-        this.author=author;
-        this.pubYear=pubYear;
-      //  this.id=id;
+        this.title = title;
+        this.author = author;
+        this.pubYear = pubYear;
 
+        id = title.hashCode();
+        id = 31 * id + author.hashCode();
+        id = 31 * id + pubYear;
 
     }
 
@@ -31,17 +33,6 @@ public class Book {
     }
 
     @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", pubYear=" + pubYear +
-
-                '}';
-    }
-
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -49,7 +40,7 @@ public class Book {
         Book book = (Book) o;
 
         if (pubYear != book.pubYear) return false;
-
+        if (id != book.id) return false;
         if (!title.equals(book.title)) return false;
         return author.equals(book.author);
     }
@@ -59,6 +50,17 @@ public class Book {
         int result = title.hashCode();
         result = 31 * result + author.hashCode();
         result = 31 * result + pubYear;
-             return result;
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", pubYear=" + pubYear +
+                ", id=" + id +
+                '}';
     }
 }
