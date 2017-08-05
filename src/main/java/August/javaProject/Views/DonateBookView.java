@@ -1,6 +1,9 @@
 package August.javaProject.Views;
 
+import August.javaProject.businessLogic.BusinessLogic;
 import August.javaProject.businessLogic.BusinessLogicImpl;
+import August.javaProject.businessLogic.api.Error;
+import August.javaProject.businessLogic.api.Response;
 import August.javaProject.domain.Book;
 
 import java.util.Scanner;
@@ -10,7 +13,15 @@ import java.util.Scanner;
  */
 public class DonateBookView implements Views {
 
-BusinessLogicImpl businessLogic = new BusinessLogicImpl();
+BusinessLogic businessLogic;
+
+
+public DonateBookView(BusinessLogic businessLogic){
+
+    this.businessLogic=businessLogic;
+
+}
+
 
     public void execute() {
         Scanner sc= new Scanner(System.in);
@@ -22,10 +33,18 @@ BusinessLogicImpl businessLogic = new BusinessLogicImpl();
         int pubYear = sc.nextInt();
 
 ///////////////////////////////BL//////////////////////////////////
-       businessLogic.donateBook(title, author, pubYear);
+      Response response= businessLogic.donateBook(title, author, pubYear);
 
 ////////////////////////////////BL////////////////////////////////////////
 
 
+        if(!response.isSuccess()){
+            for(Error error: response.getErrorList()){
+                System.out.println(error.getField()+"    "+error.getErrorMessage());
+            }
+
+        } else {
+            System.out.println("Thanks. Your book is added to eLibrary");
+        }
     }
 }
