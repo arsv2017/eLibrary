@@ -1,4 +1,4 @@
-package August.javaProject.businessLogic;
+package August.javaProject.businessLogic.api;
 
 /**
  * Created by SynMobUsr on 8/3/2017.
