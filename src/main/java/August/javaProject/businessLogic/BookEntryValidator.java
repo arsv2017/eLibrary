@@ -1,5 +1,6 @@
 package August.javaProject.businessLogic;
 
+import August.javaProject.businessLogic.api.Error;
 import August.javaProject.dataBase.DataBase;
 import August.javaProject.domain.Book;
 import com.google.common.collect.Lists;
@@ -8,9 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-/**
- * Created by SynMobUsr on 8/3/2017.
- */
 public class BookEntryValidator {
 
     DataBase dataBase;
@@ -24,13 +22,27 @@ public class BookEntryValidator {
 
     List<Error> validate(String title, String author, int pubYear) {
         List<Error> errorList = Lists.newArrayList();
-        errorList.add(titleValidation(title).get());
-        errorList.add(authorValidation(author).get());
-        errorList.add(pubYearValidation(pubYear).get());
-        Book newBook = new Book(title, author, pubYear);
-        errorList.add(alreadyExistValidation(newBook).get());
+
+        if (titleValidation(title).isPresent()) {
+
+            errorList.add(titleValidation(title).get());
+        }
+
+        if (authorValidation(author).isPresent()) {
+            errorList.add(authorValidation(author).get());
+        }
+
+        if (pubYearValidation(pubYear).isPresent()) {
+            errorList.add(pubYearValidation(pubYear).get());
+        }
+        if (alreadyExistValidation(new Book(title, author, pubYear)).isPresent()) {
+
+            errorList.add(alreadyExistValidation(new Book(title, author, pubYear)).get());
+        }
         return errorList;
     }
+
+
 
 
     Optional<Error> titleValidation(String title) {

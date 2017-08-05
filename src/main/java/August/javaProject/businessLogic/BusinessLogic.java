@@ -1,5 +1,6 @@
 package August.javaProject.businessLogic;
 
+import August.javaProject.businessLogic.api.Response;
 import August.javaProject.domain.Book;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.Optional;
 public interface BusinessLogic {
 
 
- boolean donateBook(String title, String author, int pubYear);
+ Response donateBook(String title, String author, int pubYear);
 
 
 }
