@@ -54,6 +54,27 @@ public class Book {
         return result;
     }
 
+    public int getPubYear() {
+        return pubYear;
+    }
+
+    public void setTitle(String title) {
+
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPubYear(int pubYear) {
+        this.pubYear = pubYear;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
