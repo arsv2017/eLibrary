@@ -3,25 +3,22 @@ package August.javaProject.businessLogic;
 
 import August.javaProject.businessLogic.api.Error;
 import August.javaProject.businessLogic.api.Response;
-import August.javaProject.dataBase.DataBaseImpl;
+import August.javaProject.dataBase.jdbc.BookDAOImpl;
 import August.javaProject.domain.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Component
+public class DonateBookServiceImpl implements DonateBookService {
 
-public class BusinessLogicImpl implements BusinessLogic {
+    @Autowired BookDAOImpl dao;
+    @Autowired BookEntryValidatorImpl validator;
 
-    DataBaseImpl dataBase;
-    BookEntryValidator validator;
-
-
-    public BusinessLogicImpl(DataBaseImpl dataBase, BookEntryValidator validator) {
-        this.dataBase = dataBase;
-        this.validator = validator;
-
-    }
-
-
+@Override
+@Transactional
     public Response donateBook(String title, String author, int pubYear) {
 
         List<Error> errorList = validator.validate(title, author, pubYear);
@@ -31,7 +28,7 @@ public class BusinessLogicImpl implements BusinessLogic {
 
         }
 
-        dataBase.saveNewBookInLibrary(new Book(title, author, pubYear));
+        dao.save(new Book(title, author, pubYear));
         return new Response(true, null);
     }
 }

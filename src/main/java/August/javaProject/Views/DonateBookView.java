@@ -1,26 +1,21 @@
 package August.javaProject.Views;
 
-import August.javaProject.businessLogic.BusinessLogic;
-import August.javaProject.businessLogic.BusinessLogicImpl;
+import August.javaProject.businessLogic.DonateBookService;
+import August.javaProject.businessLogic.DonateBookServiceImpl;
 import August.javaProject.businessLogic.api.Error;
 import August.javaProject.businessLogic.api.Response;
-import August.javaProject.domain.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-/**
- * Created by SynMobUsr on 8/2/2017.
- */
+
+
+@Component
 public class DonateBookView implements Views {
 
-BusinessLogic businessLogic;
-
-
-public DonateBookView(BusinessLogic businessLogic){
-
-    this.businessLogic=businessLogic;
-
-}
+@Autowired
+DonateBookService donateBookService;
 
 
     public void execute() {
@@ -33,7 +28,7 @@ public DonateBookView(BusinessLogic businessLogic){
         int pubYear = sc.nextInt();
 
 ///////////////////////////////BL//////////////////////////////////
-      Response response= businessLogic.donateBook(title, author, pubYear);
+      Response response= donateBookService.donateBook(title, author, pubYear);
 
 ////////////////////////////////BL////////////////////////////////////////
 

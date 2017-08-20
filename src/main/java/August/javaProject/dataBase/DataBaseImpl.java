@@ -1,6 +1,8 @@
 package August.javaProject.dataBase;
 
+import August.javaProject.dataBase.DataBase;
 import August.javaProject.domain.Book;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,8 @@ import java.util.List;
 /**
  * Created by SynMobUsr on 7/25/2017.
  */
+
+@Component
 public class DataBaseImpl implements DataBase {
 
     List<Book> bookList = new ArrayList<Book>();
@@ -33,6 +37,7 @@ public class DataBaseImpl implements DataBase {
         }
                 return searchResults;
     }
+
 
 
 /*   @Override
